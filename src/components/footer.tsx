@@ -44,13 +44,13 @@ const FooterLink: React.FC<FooterLinkProps> = ({ to, children }) => {
 
 export const Footer = () => {
   return (
-    <div className="w-full bg-black text-gray-300 hover:text-gray-100 py-8">
-      <Container>
+    <div className="w-full bg-black text-gray-300 hover:text-gray-100 py-8 text-white">
+      <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* First Column: Links */}
-          <div>
-            <h3 className="font-bold text-lg mb-4">Quick Links</h3>
-            <ul className="space-y-2">
+          {/* First Column: Links - moved right */}
+          <div className="pl-10 md:pl-12">
+            <h3 className="font-bold text-lg mb-2">Quick Links</h3>
+            <ul className="space-y-1 text-white">
               {MainRoutes.map((route) => (
                 <FooterLink key={route.href} to={route.href}>
                   {route.label}
@@ -60,16 +60,16 @@ export const Footer = () => {
           </div>
 
           {/* Second Column: About Us */}
-          <div>
-            <h3 className="font-bold text-lg mb-4">About Us</h3>
-            <p>
+          <div className="md:-ml-8 pl-2">
+            <h3 className="font-bold text-lg mb-2">About Us</h3>
+            <p className="pr-4">
               We are committed to helping you unlock your full potential with
               AI-powered tools. Our platform offers a wide range of resources to
               improve your interview skills and chances of success.
             </p>
           </div>
 
-          {/* Third Column: Services */}
+          {/* Third Column: Services - unchanged */}
           <div>
             <h3 className="font-bold text-lg mb-4">Services</h3>
             <ul>
@@ -85,10 +85,10 @@ export const Footer = () => {
             </ul>
           </div>
 
-          {/* Fourth Column: Address and Social Media */}
+          {/* Fourth Column: Address and Social Media - unchanged */}
           <div>
             <h3 className="font-bold text-lg mb-4">Contact Us</h3>
-            <p className="mb-4">123 AI Street, Tech City, 12345</p>
+            <p className="mb-4">VIT Chennai</p>
             <div className="flex gap-4">
               <SocialLink
                 href="https://facebook.com"
@@ -113,7 +113,7 @@ export const Footer = () => {
             </div>
           </div>
         </div>
-      </Container>
+      </div>
     </div>
   );
 };

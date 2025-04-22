@@ -112,10 +112,27 @@ export const FormMockInterview = ({ initialData }: FormMockInterviewProps) => {
         The questions should assess skills in ${data?.techStack} development and best practices, problem-solving, and experience handling complex requirements. Please format the output strictly as an array of JSON objects without any additional labels, code blocks, or explanations. Return only the JSON array with questions and answers.
         `;
 
-    const aiResult = await chatSession.sendMessage(prompt);
-    const cleanedResponse = cleanAiResponse(aiResult.response.text());
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 20000); // Increased timeout to 20 seconds
 
-    return cleanedResponse;
+    try {
+      console.log("Sending prompt to AI:", prompt); // Log the prompt being sent
+      const aiResult = await chatSession.sendMessage(prompt, { signal: controller.signal });
+      
+      // Log the response from the AI
+      console.log("AI Response:", aiResult);
+
+      const cleanedResponse = cleanAiResponse(aiResult.response.text());
+      return cleanedResponse;
+    } catch (error) {
+      console.error("Error generating AI response:", error); // Log the full error object
+      if (error.name === 'AbortError') {
+        throw new Error("Request timed out. Please try again.");
+      }
+      throw new Error(`Failed to generate AI response: ${error instanceof Error ? error.message : "Unknown error"}. Please try again.`);
+    } finally {
+      clearTimeout(timeoutId); // Clear the timeout
+    }
   };
 
   const onSubmit = async (data: FormData) => {
@@ -154,7 +171,7 @@ export const FormMockInterview = ({ initialData }: FormMockInterviewProps) => {
     } catch (error) {
       console.log(error);
       toast.error("Error..", {
-        description: `Something went wrong. Please try again later`,
+        description: error instanceof Error ? error.message : "Something went wrong. Please try again later",
       });
     } finally {
       setLoading(false);

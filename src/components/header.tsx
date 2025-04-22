@@ -11,42 +11,40 @@ const Header = () => {
   const { userId } = useAuth();
 
   return (
-    <header
-      className={cn("w-full border-b duration-150 transition-all ease-in-out")}
-    >
-      <Container>
-        <div className="flex items-center gap-4 w-full">
-          {/* logo section */}
-          <LogoContainer />
+    <header className="w-full border-b duration-150 transition-all ease-in-out bg-[rgba(1,115,115,1)] text-white">
+    <Container>
+      <div className="flex items-center gap-4 w-full">
+        {/* logo section */}
+        <LogoContainer />
 
-          {/* navigation section */}
-          <nav className="hidden md:flex items-center gap-3">
-            <NavigationRoutes />
-            {userId && (
-              <NavLink
-                to={"/generate"}
-                className={({ isActive }) =>
-                  cn(
-                    "text-base text-neutral-600",
-                    isActive && "text-neutral-900 font-semibold"
-                  )
-                }
-              >
-                Take An Interview
-              </NavLink>
-            )}
-          </nav>
+        {/* navigation section */}
+        <nav className="hidden md:flex items-center gap-3">
+          <NavigationRoutes />
+          {userId && (
+            <NavLink
+              to={"/generate"}
+              className={({ isActive }) =>
+                cn(
+                  "text-lg font-bold text-white font-[Times_New_Roman]",
+                  isActive && "font-semibold"
+                )
+              }
+            >
+              <b>Take An Interview</b>
+            </NavLink>
+          )}
+        </nav>
 
-          <div className="ml-auto flex items-center gap-6">
-            {/* profile section */}
-            <ProfileContainer />
+        <div className="ml-auto flex items-center gap-6 ">
+          {/* profile section */}
+          <ProfileContainer />
 
-            {/* mobile toggle section */}
-            <ToggleContainer />
-          </div>
+          {/* mobile toggle section */}
+          <ToggleContainer />
         </div>
-      </Container>
-    </header>
+      </div>
+    </Container>
+  </header>
   );
 };
 
